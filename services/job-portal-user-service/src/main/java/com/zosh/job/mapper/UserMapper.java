@@ -14,7 +14,7 @@ public class UserMapper {
         dto.setPhone(user.getPhone());
         dto.setProfileImage(user.getProfileImage());
         dto.setStatus(user.getStatus());
-        dto.setLastLogin(user.getLastLong());
+        dto.setLastLogin(user.getLastLogin());
         dto.setCreatedAt(user.getCreatedAt());
 
         return dto;

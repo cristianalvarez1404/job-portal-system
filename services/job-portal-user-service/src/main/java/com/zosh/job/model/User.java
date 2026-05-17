@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -49,7 +50,7 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    private LocalDateTime lastLong;
+    private LocalDateTime lastLogin;
 
     private LocalDateTime suspendedAt;
 
