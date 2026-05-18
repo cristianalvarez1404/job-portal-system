@@ -8,11 +8,16 @@ import com.zosh.job.payload.AuthResponse;
 import com.zosh.job.payload.LoginRequest;
 import com.zosh.job.payload.SignupRequest;
 import com.zosh.job.repository.UserRepository;
+import com.zosh.job.security.JwtProvider;
 import com.zosh.job.service.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +28,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AuthServiceImp implements AuthService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtProvider jwtProvider;
 
     @Override
     public AuthResponse signup(SignupRequest req) throws Exception {
@@ -38,7 +45,7 @@ public class AuthServiceImp implements AuthService {
         User user = User.builder()
                 .fullName(req.getFullName())
                 .email(req.getEmail())
-                .password(req.getPassword())
+                .password(passwordEncoder.encode(req.getPassword()))
                 .role(req.getRole())
                 .phone(req.getPhone())
                 .lastLogin(LocalDateTime.now())
@@ -47,13 +54,22 @@ public class AuthServiceImp implements AuthService {
 
         User savedUser = userRepository.save(user);
 
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                user.getEmail(),
+                user.getPassword()
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String jwt = jwtProvider.generateToken(authentication, savedUser.getId());
+
         AuthResponse res = new AuthResponse();
         res.setTitle("Welcome " + savedUser.getFullName());
         res.setMessage("Registered Successfully");
-        res.setJwt("jwt");
+        res.setJwt(jwt);
         res.setUser(UserMapper.toDTO(savedUser));
 
-        return null;
+        return res;
     }
 
     @Override
