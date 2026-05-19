@@ -2,6 +2,7 @@ package com.zosh.job.controller;
 
 
 import com.zosh.job.payload.AuthResponse;
+import com.zosh.job.payload.LoginRequest;
 import com.zosh.job.payload.SignupRequest;
 import com.zosh.job.service.AuthService;
 import jakarta.validation.Valid;
@@ -24,6 +25,13 @@ public class AuthController {
             @RequestBody @Valid SignupRequest req
             ) throws Exception {
         return ResponseEntity.ok(authService.signup(req));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(
+        @RequestBody @Valid LoginRequest req
+    ) throws Exception {
+        return ResponseEntity.ok(authService.login(req));
     }
 
 }

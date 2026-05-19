@@ -8,6 +8,7 @@ import com.zosh.job.payload.AuthResponse;
 import com.zosh.job.payload.LoginRequest;
 import com.zosh.job.payload.SignupRequest;
 import com.zosh.job.repository.UserRepository;
+import com.zosh.job.security.CustomUserDetails;
 import com.zosh.job.security.JwtProvider;
 import com.zosh.job.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,7 @@ public class AuthServiceImp implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final CustomUserDetails customUserDetails;
 
     @Override
     public AuthResponse signup(SignupRequest req) throws Exception {
@@ -73,7 +76,41 @@ public class AuthServiceImp implements AuthService {
     }
 
     @Override
-    public AuthResponse login(LoginRequest req) {
-        return null;
+    public AuthResponse login(LoginRequest req) throws Exception {
+        Authentication authentication = authenticate(
+                req.getEmail(),
+                req.getPassword()
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        User user = userRepository.findByEmail(req.getEmail());
+
+        String jwt = jwtProvider.generateToken(authentication, user.getId());
+
+        user.setLastLogin(LocalDateTime.now());
+        userRepository.save(user);
+
+        AuthResponse res = new AuthResponse();
+        res.setTitle("Welcome back -- " + user.getFullName());
+        res.setMessage("Login Successfully");
+        res.setJwt(jwt);
+        res.setUser(UserMapper.toDTO(user));
+
+        return res;
+    }
+
+    private Authentication authenticate(String email, String password) throws Exception {
+        UserDetails userDetails = customUserDetails.loadUserByUsername(email);
+
+        if(userDetails == null){
+            throw new Exception("user not found with email " + email);
+        }
+
+        if(!passwordEncoder.matches(password, userDetails.getPassword())){
+            throw new Exception("Invalid password");
+        }
+
+        return new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities());
     }
 }

@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a48f92e0-5a98-4f83-8910-0fc4b5850893" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-user-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-user-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/job-portal-user-service/src/main/java/com/zosh/job/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-user-service/src/main/java/com/zosh/job/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-user-service/src/main/java/com/zosh/job/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-user-service/src/main/java/com/zosh/job/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-user-service/src/main/java/com/zosh/job/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-user-service/src/main/java/com/zosh/job/service/AuthService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/job-portal-user-service/src/main/java/com/zosh/job/service/imp/AuthServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-user-service/src/main/java/com/zosh/job/service/imp/AuthServiceImp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,7 +84,8 @@
       <option name="presentableId" value="Default" />
       <updated>1778709084840</updated>
       <workItem from="1779051870667" duration="3965000" />
-      <workItem from="1779138870481" duration="3263000" />
+      <workItem from="1779138870481" duration="3318000" />
+      <workItem from="1779228634738" duration="3638000" />
     </task>
     <servers />
   </component>
