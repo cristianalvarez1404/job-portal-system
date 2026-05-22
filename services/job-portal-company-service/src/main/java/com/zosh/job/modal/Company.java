@@ -6,7 +6,10 @@ import com.zosh.job.domain.CompanyType;
 import com.zosh.job.domain.IndustryType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +54,7 @@ public class Company {
     private IndustryType industryType;
 
     @Enumerated(EnumType.STRING)
-    private CompanyStatus companyStatus;
+    private CompanyStatus status;
 
     @Column(unique = true)
     private String registrationNumber;
@@ -59,7 +62,17 @@ public class Company {
     @Column(nullable = false, unique = true)
     private Long ownerId;
 
+    @ElementCollection
     private List<SocialLink> socialLinks = new ArrayList<>();
 
+    private Boolean activate = true;
+
+    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
 }
