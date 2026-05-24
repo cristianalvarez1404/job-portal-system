@@ -10,9 +10,9 @@ import com.zosh.job.modal.Company;
 import java.util.List;
 
 public interface CompanyService {
-    CompanyResponse createCompany(Long ownerId, CompanyRequest req);
-    CompanyResponse getCompanyById(Long id);
-    CompanyResponse getMyCompany(Long ownerId);
+    CompanyResponse createCompany(Long ownerId, CompanyRequest req) throws Exception;
+    CompanyResponse getCompanyById(Long id) throws Exception;
+    CompanyResponse getMyCompany(Long ownerId) throws Exception;
     List<CompanyResponse> getAllCompanies(CompanyType companyType,
                                           IndustryType industryType,
                                           CompanyStatus companyStatus);
