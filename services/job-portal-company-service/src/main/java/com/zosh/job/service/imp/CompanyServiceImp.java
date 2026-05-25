@@ -84,7 +84,7 @@ public class CompanyServiceImp implements CompanyService {
         }
 
         int counter = 1;
-        while(companyRepository.existsBySlug(base+"-"+counter){
+        while(companyRepository.existsBySlug(base+"-"+counter)){
             counter++;
         }
         return base+"-"+counter;
@@ -106,31 +106,85 @@ public class CompanyServiceImp implements CompanyService {
 
     @Override
     public List<CompanyResponse> getAllCompanies(CompanyType companyType, IndustryType industryType, CompanyStatus companyStatus) {
-        return List.of();
+
+        return  companyRepository.findByFilters(
+                companyType,
+                industryType,
+                companyStatus
+        ).stream()
+                .map(CompanyMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public CompanyResponse updateCompany(Long companyId, Long ownerId, CompanyRequest req) {
-        return null;
+    public CompanyResponse updateCompany(Long companyId, Long ownerId, CompanyRequest req) throws Exception {
+        Company company = getCompanyEntityById(companyId);
+
+        if(!company.getName().equals(req.getName()) &&
+            companyRepository.existsByName(req.getName())
+        ){
+            throw new Exception("Company already exits. Please choose a different name.");
+        }
+
+        if(req.getRegistrationNumber() != null &&
+                !req.getRegistrationNumber().equals(company.getRegistrationNumber()) &&
+                companyRepository.existsByRegistrationNumber(req.getRegistrationNumber())
+        ){
+            throw new Exception("Company already exists. Please choose a different registration number.");
+        }
+
+        company.setName(req.getName());
+        company.setTagline(req.getTagLine());
+        company.setName(req.getName());
+        company.setDescription(req.getDescriptor());
+        company.setLogoUrl(req.getLogoUrl());
+        company.setCoverImageUrl(req.getConvertImageUrl());
+        company.setWebsite(req.getWebsite());
+        company.setEmail(req.getEmail());
+        company.setPhone(req.getPhone());
+        company.setFoundedYear(req.getFoundedYear());
+        company.setCompanySize(req.getCompanySize());
+        company.setCompanyType(req.getCompanyType());
+        company.setIndustryType(req.getIndustryType());
+        company.setRegistrationNumber(req.getRegistrationNumber());
+        company.setSocialLinks(mapSocialLinks(req.getSocialLinks()));
+
+        return CompanyMapper.toResponse(companyRepository.save(company));
     }
 
     @Override
-    public CompanyResponse verifyCompany(Long companyId) {
-        return null;
+    public CompanyResponse verifyCompany(Long companyId) throws Exception {
+        Company company = getCompanyEntityById(companyId);
+        company.setStatus(CompanyStatus.ACTIVE);
+        company.setVerified(true);
+        return CompanyMapper.toResponse(companyRepository.save(company));
     }
 
     @Override
-    public void deleteCompany(Long companyId) {
+    public void deleteCompany(Long companyId, Long ownerId) throws Exception {
+        Company company = getCompanyEntityById(companyId);
+        assetOwner(company, ownerId);
+        companyRepository.delete(company);
+    }
 
+    private void assetOwner(Company company, Long ownerId) throws Exception {
+        if(!company.getOwnerId().equals(ownerId)){
+            throw new Exception("you are not the owner of this company");
+        }
     }
 
     @Override
-    public CompanyResponse deactivateCompany(Long companyId) {
-        return null;
+    public CompanyResponse deactivateCompany(Long companyId) throws Exception {
+        Company company = getCompanyEntityById(companyId);
+        company.setStatus(CompanyStatus.SUSPENDED);
+        company.setVerified(false);
+        return CompanyMapper.toResponse(companyRepository.save(company));
     }
 
     @Override
-    public Company getCompanyEntityById(Long id) {
-        return null;
+    public Company getCompanyEntityById(Long id) throws Exception {
+        return companyRepository.findById(id).orElseThrow(
+                ()-> new Exception("company not found with id")
+        );
     }
 }

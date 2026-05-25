@@ -59,6 +59,8 @@ public class Company {
     @Enumerated(EnumType.STRING)
     private CompanyStatus status;
 
+    private boolean isVerified = false;
+
     @Column(unique = true)
     private String registrationNumber;
 
