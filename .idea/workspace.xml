@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f8731fe7-67e3-43fc-a2f9-aa6abb9140ca" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-lib/src/main/java/com/zosh/job/service/JobService.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/src/main/java/com/zosh/job/service/JobService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-lib/src/main/java/com/zosh/job/dto/JobResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-lib/src/main/java/com/zosh/job/dto/JobResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/zosh/job/payload/JobSearchRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/zosh/job/payload/JobSearchRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/zosh/job/service/JobService.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/zosh/job/service/JobService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/zosh/job/service/impl/JobServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/services/job-portal-job-service/src/main/java/com/zosh/job/service/impl/JobServiceImp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,21 +37,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/CRISTIAN/Desktop/job-portal-system",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/CRISTIAN/Desktop/job-portal-system&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.zosh.job.payload" />

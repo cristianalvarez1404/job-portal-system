@@ -1,7 +1,9 @@
 package com.zosh.job.service.impl;
 
+import com.zosh.job.dto.CompanyResponse;
 import com.zosh.job.dto.JobRequest;
 import com.zosh.job.dto.JobResponse;
+import com.zosh.job.mapper.JobMapper;
 import com.zosh.job.modal.Job;
 import com.zosh.job.modal.embeddable.JobLocation;
 import com.zosh.job.modal.embeddable.SalaryRange;
@@ -43,29 +45,17 @@ public class JobServiceImp implements JobService {
                 .applicationDeadline(req.getApplicationDeadline())
                 .expiresAt(req.getExpiresAt())
                 .build();
-        return null;
-    }
 
-    private SalaryRange buildSalaryRange(JobRequest req) {
-        return SalaryRange.builder()
-                .minSalary(req.getMinSalary())
-                .maxSalary(req.getMaxSalary())
-                .build();
-    }
-
-    private JobLocation buildLocation(JobRequest req) {
-        return JobLocation.builder()
-                .address(req.getAddress())
-                .city(req.getCity())
-                .state(req.getState())
-                .country(req.getCountry())
-                .zipCode(req.getZipCode())
-                .build();
+        Job savedJob = jobRepository.save(job);
+        return convertToResponse(savedJob);
     }
 
     @Override
-    public JobResponse getJobById(Long id) {
-        return null;
+    public JobResponse getJobById(Long id) throws Exception {
+        Job job = jobRepository.findById(id).orElseThrow(
+                ()-> new Exception("Job not found")
+        );
+        return convertToResponse(job);
     }
 
     @Override
@@ -101,5 +91,31 @@ public class JobServiceImp implements JobService {
     @Override
     public List<JobResponse> getAllJobsAdmin() {
         return List.of();
+    }
+
+    private JobResponse convertToResponse(Job savedJob) {
+        //todo : fetch company response
+        CompanyResponse companyResponse = CompanyResponse.builder()
+                .id(savedJob.getCompanyId())
+                .build();
+
+        return JobMapper.toResponse(savedJob,companyResponse);
+    }
+
+    private SalaryRange buildSalaryRange(JobRequest req) {
+        return SalaryRange.builder()
+                .minSalary(req.getMinSalary())
+                .maxSalary(req.getMaxSalary())
+                .build();
+    }
+
+    private JobLocation buildLocation(JobRequest req) {
+        return JobLocation.builder()
+                .address(req.getAddress())
+                .city(req.getCity())
+                .state(req.getState())
+                .country(req.getCountry())
+                .zipCode(req.getZipCode())
+                .build();
     }
 }
